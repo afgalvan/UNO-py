@@ -1,10 +1,15 @@
-#!/usr/bin/env python3
+# Copyright (c) 2020 by Andrés Galván
 from random import randint
+from time import sleep
 from Colors import *
 from Carts import generate_carts
-    
+
 class Player:
     kind = "User"
+    wins = 0
+    matches = 0
+    loses = 0
+    
 
     def __init__(self, name):
         self.name = name
@@ -27,11 +32,19 @@ class Player:
         you_have_this = False
 
         for i in self.hand:
-            if i.content == cart:
+            if i.keypress == cart.upper():
                 you_have_this = True
                 save_cart = i
-
-                if i.content == game.card_in_game.content or i.color == game.card_in_game.color:
+                
+                if game.card_in_game.color == Fore.WHITE:
+                    self.hand.remove(i)
+                    carts_array.append(game.card_in_game)
+                    game.card_in_game = i
+                    return True
+                
+                if (i.keypress == game.card_in_game.keypress
+                 or i.color == game.card_in_game.color
+                 or i.color == Fore.WHITE):
                     self.hand.remove(i)
                     carts_array.append(game.card_in_game)
                     game.card_in_game = i
@@ -40,10 +53,12 @@ class Player:
         if self.kind == "Bot": return False
 
         if you_have_this:    
-            print(save_cart.color + "\t\t({0}) <─ You can't play this card.".format(cart))
+            print(save_cart.color + "\t\t({0}) <─ You can't "
+            "play this card.".format(save_cart.content))
             return False     
 
-        print("\t\t({0}) <─ You don't have this card.".format(cart))
+        print("\t\t({0}) <─ You don't have "
+        "this card.".format(cart))
         return False
 
 
@@ -52,8 +67,9 @@ class Player:
             self.eat_cart(carts_array)
 
 
-    def show_hand(self):
+    def show_hand(self, first):
         for i in self.hand:
+            if first: sleep(0.5)
             print("\t{}".format(i), end="")
         print("\n")
 
@@ -66,11 +82,11 @@ class Bot(Player):
         return "{0} bot".format(self.name)
 
 
-    def bot_move(self, game, carts):
+    def bot_move(self, game, carts):        
         moved = False
         while not moved:
             for c in self.hand:
-                moved = self.put_cart(c.content, carts, game)
+                moved = self.put_cart(c.keypress, carts, game)
                 if moved:
                     print("Sweet move.")
                     break

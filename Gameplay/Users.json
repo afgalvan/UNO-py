@@ -1,18 +1,11 @@
 {
   "Users": [
     {
-      "Username": "Mike",
-      "Matches": 0,
-      "Wins": 0,
-      "Loses": 0,
-      "Winrate": 0
-    },
-    {
-      "Username": "json",
-      "Matches": 0,
-      "Wins": 0,
-      "Loses": 0,
-      "Winrate": 0
+      "Username": "Pipe",
+      "Matches": 7,
+      "Wins": 2,
+      "Loses": 5,
+      "Winrate": 28.57142857142857
     }
   ]
 }

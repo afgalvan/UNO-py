@@ -45,6 +45,7 @@ def load_user():
     while not exists:
         username = input("\nEnter your username: ")
         exists = user_validation(username)
+        if not exists: print("\nUsername not registered.")
     return username
 
 
