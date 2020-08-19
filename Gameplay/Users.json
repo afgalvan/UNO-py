@@ -2,10 +2,10 @@
   "Users": [
     {
       "Username": "Pipe",
-      "Matches": 7,
-      "Wins": 2,
-      "Loses": 5,
-      "Winrate": 28.57142857142857
+      "Matches": 13,
+      "Wins": 12,
+      "Loses": 1,
+      "Winrate": 92.3076923076923
     }
   ]
 }

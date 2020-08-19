@@ -3,8 +3,9 @@ from random import randint
 from Colors import *
 
 
-class StandardCarts:
+class StandardCards:
     def __init__(self, index, color):
+        self.owner = ""
         self.keypress = index
         self.kind = "Numeric"
         self.content = index
@@ -14,42 +15,48 @@ class StandardCarts:
         return self.color + "|{0}|".format(self.content)
 
 
-class PlusFour:
+class Special:
+    kind = "Special"
+    owner = ""
+
+
+class PlusFour(Special):
     def __init__(self):
         self.keypress = "+4"
         self.content = "+4"
-        self.kind = "Special"
         self.color = Fore.WHITE
         self.aspect = Fore.WHITE + Back.BLACK + Style.BRIGHT
         
     def __str__(self):
         return self.aspect + "|{0}|".format(self.content) + Style.RESET_ALL
     
-    def action(self, player, carts):
+    def action(self, player, cards):
         for each in range(4):
-            player.eat_cart(carts)
+            player.eat_card(cards)
 
 
-class ColorChange:
+class ColorChange(Special):
     def __init__(self):
         self.keypress = "C"
         self.content = Fore.GREEN + "|" + Fore.BLUE + "\\" + Fore.WHITE + "C" + Fore.RED +  "/" + Fore.YELLOW + "|"
-        self.kind = "Special"
         self.color = Fore.WHITE
         self.aspect = Back.BLACK + Style.BRIGHT
         
     def __str__(self):
         return self.aspect + "{0}".format(self.content) + Style.RESET_ALL
     
-    def action(self, game, color_desired):
-        pass
-    #     game.card_in_game.color = color_desired
+    def action(self, player, cards):
+        if player.kind == "User":
+            while True:
+                desired_color = input("Enter de letter of your color: ")
+                if desired_color.lower() in ["r", "b", "g", "y"]:
+                    break
+            return desired_color
 
-class Reverse:
+class Reverse(Special):
     def __init__(self, color):
         self.keypress = "R"
         self.content = "^v"
-        self.kind = "Special"
         self.color = color
     
     def __str__(self):
@@ -60,63 +67,61 @@ class Reverse:
 
 
    
-class Skip:
+class Skip(Special):
     def __init__(self, color):
         self.keypress = "S"
         self.content = "(/)"
-        self.kind = "Special"
         self.color = color
         
     def __str__(self):
         return self.color + "|{0}|".format(self.content)
     
-    def action(self, game, color_desired):
-        pass
+    def action(self, player, cards):
+        return 
 
         
-class PlusTwo:
+class PlusTwo(Special):
     def __init__(self, color):
         self.keypress = "+2"
         self.content = "+2"
-        self.kind = "Special"
         self.color = color
         
     def __str__(self):
         return self.color + "|{0}|".format(self.content)
 
-    def action(self, player, carts):
+    def action(self, player, cards):
         for each in range(2):
-            player.eat_cart(carts)
+            player.eat_card(cards)
 
 
-def generate_carts():
-    create_carts = [cart for cart in range(1, 10)] * 2
-    create_carts.append(0)
-    cart_colors = [Fore.RED, Fore.BLUE, Fore.GREEN, Fore.YELLOW]
+def generate_cards():
+    create_cards = [card for card in range(1, 10)] * 2
+    create_cards.append(0)
+    card_colors = [Fore.RED, Fore.BLUE, Fore.GREEN, Fore.YELLOW]
     cards_array = []
     
-    for i in create_carts:
-        for j in cart_colors:
-            new = StandardCarts(str(i), j)
+    for i in create_cards:
+        for j in card_colors:
+            new = StandardCards(str(i), j)
             cards_array.append(new)
             
     for i in range(2):
         cc = ColorChange()
-        cards_array.append(cc)
-        cards_array.append(cc)
+        # cards_array.append(cc)
+        # cards_array.append(cc)
         
         pf = PlusFour()
         cards_array.append(pf)
         cards_array.append(pf)
         
-        for j in cart_colors:
+        for j in card_colors:
             pt = PlusTwo(j)
             sk = Skip(j)
             rv = Reverse(j)
             
             cards_array.append(pt)
             cards_array.append(sk)
-            cards_array.append(rv)
+            # cards_array.append(rv)
             
     cards_array = shuffle_cards(cards_array)
     
@@ -131,9 +136,3 @@ def shuffle_cards(cards_array):
         cards_array[rand_index], cards_array[i] = cards_array[i], cards_array[rand_index]
         
     return cards_array
-
-# carts = generate_carts()
-# print(len(carts))
-# for i in carts:
-#     print(i, end = " - ")
-# print()
