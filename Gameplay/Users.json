@@ -2,10 +2,17 @@
   "Users": [
     {
       "Username": "Pipe",
-      "Matches": 13,
-      "Wins": 12,
+      "Matches": 14,
+      "Wins": 13,
       "Loses": 1,
-      "Winrate": 92.3076923076923
+      "Winrate": 92.85714285714286
+    },
+    {
+      "Username": "Rochi",
+      "Matches": 2,
+      "Wins": 1,
+      "Loses": 1,
+      "Winrate": 50.0
     }
   ]
 }
