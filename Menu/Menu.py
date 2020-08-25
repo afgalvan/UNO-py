@@ -6,12 +6,12 @@ try:
     sys.path.append("../Gameplay")
     from Game import *
     from Random_color import *
-    from Users_management import *
+    from Users_managementDB import *
 except:
     sys.path.append("Gameplay")
     from Game import *
     from Random_color import *
-    from Users_management import *
+    from Users_managementDB import *
 
 
 
