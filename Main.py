@@ -2,4 +2,6 @@
 # Copyright (c) 2020 by Andrés Galván
 
 from Menu.Menu import *
-main_menu()
+
+if __name__ == "__main__" : 
+    main_menu()
